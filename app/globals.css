@@ -66,7 +66,7 @@
 /* START: Home styles */
 
 .home__text-container {
-  @apply  ;
+  @apply flex flex-col items-start justify-start gap-y-2.5 text-black-100;
 }
 
 .home__filters {
@@ -188,7 +188,7 @@
 
 /* START: searchbar styles */
 .searchbar {
-  @apply  ;
+  @apply flex items-center justify-start max-sm:flex-col w-full relative max-sm:gap-4 max-w-3xl;
 }
 
 .searchbar__item {
