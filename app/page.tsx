@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import { Hero, SearchBar, CustomFilter, CarCard } from '@/components';
+import { Hero, SearchBar, CustomFilter, CarCard, ShowMore } from '@/components';
 import { fetchAllCars } from '@/utils';
 import { HomeProps } from "@/types";
 import { fuels, yearsOfProduction } from '@/constants';
@@ -43,6 +43,10 @@ export default async function Home({ searchParams }: HomeProps) {
                 				<CarCard car={car} />
               				))}	
 						</div>
+						<ShowMore
+							pageNumber={(searchParams.limit || 10) / 10}
+							isNext={(searchParams.limit || 10) > allCars.length}
+						/>
 					</section>
 				) : (
 					<div className='mt-16 flex justify-center items-center flex-col gap-2'>
@@ -52,8 +56,8 @@ export default async function Home({ searchParams }: HomeProps) {
 						<p>
 							{allCars?.message}
 						</p>
-					</div>
-				)
+					</div> 
+					 )
 				}
 			</div>
 
