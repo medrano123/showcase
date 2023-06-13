@@ -6,7 +6,9 @@ import Image from 'next/image'
 import { manufacturers } from '@/constants'
 import { SearchManuFacturerProps } from '@/types'
 
-const SearchManufacturer = ({ manufacturer, setManufacturer }: SearchManuFacturerProps ) => {
+// const SearchManufacturer = ({ manufacturer, setManufacturer }: SearchManuFacturerProps ) => {
+const SearchManufacturer = ({ selected, setSelected }) => {
+
     const [query, setQuery] = useState('');
     const filteredManufacturers = (query === '') ? manufacturers : manufacturers.filter((item) => (
         item.toLowerCase().replace(/\s+/g, "").includes(query.toLowerCase().replace(/\s+/g, ""))
@@ -16,8 +18,8 @@ const SearchManufacturer = ({ manufacturer, setManufacturer }: SearchManuFacture
     return (
         <div className='flex-1 max-sm:w-full flex justify-start items-center '>
             <Combobox 
-                value={manufacturer}
-                onChange={setManufacturer}
+                value={selected}
+                onChange={setSelected}
             >
                 <div className='relative w-full'>
                     <Combobox.Button className="absolute top-[14px]">

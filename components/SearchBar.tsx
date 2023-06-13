@@ -17,41 +17,43 @@ const SearchButton = ({ otherClasses }: { otherClasses: string }) => (
     </button>
 )
  
-const SearchBar = () => {
-    const [manufacturer, setManufacturer] = useState('')
-    const [model, setModel] = useState('')
+const SearchBar = ({ setManufacturer, setModel }) => {
+    const [searchManufacturer, setSearchManufacturer] = useState('')
+    const [searchModel, setSearchModel] = useState('')
 
     const router = useRouter();
 
 
     const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (manufacturer.trim() === "" && model.trim() === "") {
+        if (searchManufacturer.trim() === "" && searchModel.trim() === "") {
             return alert("Elements must not be empty");
         }
     
-        updateSearchParams(model.toLowerCase(), manufacturer.toLowerCase());
+        setModel(searchModel);
+        setManufacturer(searchManufacturer)
+        // updateSearchParams(searchModel.toLowerCase(), searchManufacturer.toLowerCase());
     };
 
-    const updateSearchParams = (model: string, manufacturer: string) => {
-        const searchParams = new URLSearchParams(window.location.search)
+    // const updateSearchParams = (searchModel: string, manufacturer: string) => {
+    //     const searchParams = new URLSearchParams(window.location.search)
 
-        if(model){
-            searchParams.set('model', model)
-        } else {
-            searchParams.delete('model')
-        }
+    //     if(searchModel){
+    //         searchParams.set('searchModel', searchModel)
+    //     } else {
+    //         searchParams.delete('searchModel')
+    //     }
 
-        if(model){
-            searchParams.set('manufacturer', manufacturer)
-        } else {
-            searchParams.delete('manufacturer')
-        }    
+    //     if(searchModel){
+    //         searchParams.set('manufacturer', manufacturer)
+    //     } else {
+    //         searchParams.delete('manufacturer')
+    //     }    
 
-        const newPathname = `${window.location.pathname}?${searchParams.toString()}`;
+    //     const newPathname = `${window.location.pathname}?${searchParams.toString()}`;
 
-        router.push(newPathname);
-    }
+    //     router.push(newPathname);
+    // }
     
     return (
         <form 
@@ -60,15 +62,17 @@ const SearchBar = () => {
         >
             <div className="flex-1 max-sm:w-full flex justify-start items-center relative">
                 <SearchManufacturer
-                    manufacturer={manufacturer}
-                    setManufacturer={setManufacturer}
+                    // manufacturer={searchManufacturer}
+                    // setManufacturer={setSearchManufacturer}
+                    selected={searchManufacturer}
+                    setSelected={setSearchManufacturer}
                 />
                 <SearchButton otherClasses='sm:hidden' />
             </div>
             <div className="flex-1 max-sm:w-full flex justify-start items-center relative">
                 <Image
                     src="/model-icon.png"
-                    alt="car moddel"
+                    alt="car model"
                     height={25}
                     width={25}
                     className="absolute w-[20px] h-[20px] ml-4  "
@@ -76,8 +80,8 @@ const SearchBar = () => {
                 <input
                     type='text'
                     name='model'
-                    value={model}
-                    onChange={(e) => setModel(e.target.value)}
+                    value={searchModel}
+                    onChange={(e) => setSearchModel(e.target.value)}
                     placeholder='Tiguan...'
                     className='w-full h-[48px] pl-12 p-4 bg-light-white rounded-r-full max-sm:rounded-full outline-none cursor-pointer text-sm'
                 />
